@@ -1,0 +1,23 @@
+﻿@model List<Quiz>
+
+@{
+    ViewData["Title"] = "Quizzes";
+}
+
+
+<h1>Quizzes</h1>
+
+<form method="post" asp-action="SubmitQuiz">
+    @foreach (var quiz in Model)
+    {
+        <div>
+            <h4>@quiz.Question</h4>
+            <label><input type="radio" name="@quiz.QuizId" value="@quiz.Option1">@quiz.Option1</label><br>
+            <label><input type="radio" name="@quiz.QuizId" value="@quiz.Option2">@quiz.Option2</label><br>
+            <label><input type="radio" name="@quiz.QuizId" value="@quiz.Option3">@quiz.Option3</label><br>
+            <label><input type="radio" name="@quiz.QuizId" value="@quiz.Option4">@quiz.Option4</label><br>
+        </div>
+        <br />
+    }
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

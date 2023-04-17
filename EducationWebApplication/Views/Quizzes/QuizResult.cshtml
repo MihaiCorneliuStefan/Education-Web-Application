@@ -1,0 +1,16 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Quizzes Results";
+}
+
+<h2>Your Quiz Result</h2>
+<p>Your score: @Model</p>
+@if (Model >= 1)
+{
+<p>Congratulations, you passed the quiz!</p>
+}
+else
+{
+<p>Sorry, you did not pass the quiz. Please try again.</p>
+}
