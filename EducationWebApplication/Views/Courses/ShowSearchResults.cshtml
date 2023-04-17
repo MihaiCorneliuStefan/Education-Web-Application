@@ -8,7 +8,7 @@
         <form asp-action="ShowResults">
             <div class="form-group">
                 <label for="SearchPhrase" class="control-label"></label>
-                <input name="SearchPhrase" class="form-control" />
+                <input name="SearchPhrase" id="SearchPhrase" class="form-control" />
             </div>
             <br />
             <div class="form-group">
@@ -21,3 +21,21 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+@section scripts{
+<script>
+$(document).ready(function () {
+    $("#SearchPhrase").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Courses/SearchSuggestions",
+                data: { searchString: request.term },
+                success: function (data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 2
+    });
+});
+</script>
+}

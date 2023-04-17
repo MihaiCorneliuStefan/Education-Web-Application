@@ -36,6 +36,19 @@ namespace EducationWebApplication.Controllers
             return View("Index", await _context.Course.Where(i => i.CourseName.Contains(SearchPhrase)).ToListAsync());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SearchSuggestions(string searchString)
+        {
+            var courses = await _context.Course
+                .Where(c => c.CourseName.StartsWith(searchString))
+                .Select(c => new { label = c.CourseName })
+                .ToListAsync();
+
+            return Json(courses);
+        }
+
+
+
         // GET: Courses/Details
         public async Task<IActionResult> Details(int? id)
         {

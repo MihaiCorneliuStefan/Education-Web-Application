@@ -8,9 +8,10 @@
 <p>Your score: @Model</p>
 @if (Model >= 1)
 {
-<p>Congratulations, you passed the quiz!!</p>
+<p>Congratulations, you passed the quiz!</p>
 }
 else
 {
 <p>Sorry, you did not pass the quiz. Please try again.</p>
 }
+<a asp-action="ShowQuizzes">Back to Quizzes</a>
