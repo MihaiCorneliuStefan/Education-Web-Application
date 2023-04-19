@@ -1,8 +1,10 @@
 ﻿@model EducationWebApplication.Models.Rating
-
+@{
+    ViewData["Title"] = "Add Course Rating";
+}
 <h2>Add Course Rating</h2>
-<br />
 <form asp-action="AddRating" method="post">
+    <br />
     <div class="form-group">
         <label asp-for="CourseName" class="control-label col-md-2"></label>
         <input asp-for="CourseName" class="form-control" />
@@ -10,9 +12,14 @@
     </div>
     <br />
     <div class="form-group">
-        <label asp-for="RatingValue" class="control-label col-md-2"></label>
-        <input asp-for="RatingValue" class="form-control" />
-        <span asp-validation-for="RatingValue" class="text-danger"></span>
+        <label asp-for="RatingValue" class="control-label col-md-2">Rating</label>
+        <select asp-for="RatingValue" class="form-control">
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+        </select>
     </div>
     <br />
     <div class="form-group">
@@ -27,3 +34,4 @@
         </div>
     </div>
 </form>
+

@@ -1,25 +1,18 @@
 ﻿@model List<Rating>
-
-<table>
-    <thead>
-        <tr>
-            <th>Rating Id</th>
-            <th>Course Name</th>
-            <th>Rating Value</th>
-            <th>Rating Description</th>
-            <th>Rating Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var rating in Model)
-        {
-            <tr>
-                <td>@rating.RatingId</td>
-                <td>@rating.CourseName</td>
-                <td>@rating.RatingValue</td>
-                <td>@rating.RatingDescription</td>
-                <td>@rating.RatingTime</td>
-            </tr>
-        }
-    </tbody>
-</table>
+@{
+    ViewData["Title"] = "Course Ratings";
+}
+<h2>Course Ratings</h2>
+<br>
+@foreach (var rating in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>Rating Id: @rating.RatingId</h5>
+            <p>Course Name: @rating.CourseName</p>
+            <p>Rating Value: @rating.RatingValue/5&nbsp;<i class="bi bi-star-fill"></i>
+            <p>Rating Description: @rating.RatingDescription</p>
+            <p><small class="text-muted">Rating Time: @rating.RatingTime</small></p>
+        </div>
+    </div>
+}
