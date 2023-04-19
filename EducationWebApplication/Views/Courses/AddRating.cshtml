@@ -2,30 +2,23 @@
 
 <h2>Add Course Rating</h2>
 <br />
-@using (Html.BeginForm())
-{
+<form asp-action="AddRating" method="post">
     <div class="form-group">
-        @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
-        </div>
+        <label asp-for="CourseName" class="control-label col-md-2"></label>
+        <input asp-for="CourseName" class="form-control" />
+        <span asp-validation-for="CourseName" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
-        @Html.LabelFor(model => model.RatingValue, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.RatingValue, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RatingValue, "", new { @class = "text-danger" })
-        </div>
+        <label asp-for="RatingValue" class="control-label col-md-2"></label>
+        <input asp-for="RatingValue" class="form-control" />
+        <span asp-validation-for="RatingValue" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
-        @Html.LabelFor(model => model.RatingDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.RatingDescription, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RatingDescription, "", new { @class = "text-danger" })
-        </div>
+        <label asp-for="RatingDescription" class="control-label col-md-2"></label>
+        <input asp-for="RatingDescription" class="form-control" />
+        <span asp-validation-for="RatingDescription" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
@@ -33,4 +26,4 @@
             <button type="submit" class="btn btn-primary">Add Rating</button>
         </div>
     </div>
-}
+</form>
