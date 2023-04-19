@@ -1,0 +1,25 @@
+﻿@model List<Rating>
+
+<table>
+    <thead>
+        <tr>
+            <th>Rating Id</th>
+            <th>Course Name</th>
+            <th>Rating Value</th>
+            <th>Rating Description</th>
+            <th>Rating Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rating in Model)
+        {
+            <tr>
+                <td>@rating.RatingId</td>
+                <td>@rating.CourseName</td>
+                <td>@rating.RatingValue</td>
+                <td>@rating.RatingDescription</td>
+                <td>@rating.RatingTime</td>
+            </tr>
+        }
+    </tbody>
+</table>

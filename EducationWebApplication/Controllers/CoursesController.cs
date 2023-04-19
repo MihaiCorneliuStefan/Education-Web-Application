@@ -47,6 +47,30 @@ namespace EducationWebApplication.Controllers
             return Json(courses);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetCourseRatings()
+        {
+            var ratings = await _context.Rating.ToListAsync();
+            return View(ratings);
+        }
+
+        public IActionResult AddRating()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRating(Rating rating)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Rating.Add(rating);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("GetCourseRatings");
+            }
+            return View(rating);
+        }
+
 
 
         // GET: Courses/Details

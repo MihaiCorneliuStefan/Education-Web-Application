@@ -12,5 +12,6 @@ namespace EducationWebApplication.Data
         }
         public DbSet<EducationWebApplication.Models.Course> Course { get; set; }
         public DbSet<EducationWebApplication.Models.Quiz> Quiz { get; set; }
+        public DbSet<EducationWebApplication.Models.Rating> Rating { get; set; }
     }
 }
