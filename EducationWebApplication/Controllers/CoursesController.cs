@@ -75,21 +75,29 @@ namespace EducationWebApplication.Controllers
         {
             return View();
         }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddRating(Rating rating)
         {
+            var course = await _context.Course.FirstOrDefaultAsync(c => c.CourseName == rating.CourseName);
+            if (course == null)
+            {
+                return View(rating);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Rating.Add(rating);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Rating created successfully";
                 return RedirectToAction("GetCourseRatings");
             }
+
             return View(rating);
         }
 
-
-
+        [Authorize]
         // GET: Courses/Details
         public async Task<IActionResult> Details(int? id)
         {

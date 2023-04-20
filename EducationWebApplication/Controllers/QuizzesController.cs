@@ -21,6 +21,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Quizzes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
               return _context.Quiz != null ? 
@@ -29,6 +30,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Quizzes/ShowQuizzes
+        [Authorize]
         public async Task<IActionResult> ShowQuizzes()
         {
             var quizzes = await _context.Quiz.ToListAsync();
@@ -55,7 +57,7 @@ namespace EducationWebApplication.Controllers
             return View("QuizResult",score);
         }
 
-
+        [Authorize]
         // GET: Quizzes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -93,6 +95,7 @@ namespace EducationWebApplication.Controllers
             {
                 _context.Add(quiz);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Quiz created successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(quiz);
@@ -146,6 +149,7 @@ namespace EducationWebApplication.Controllers
                         throw;
                     }
                 }
+                TempData["success"] = "Quiz updated successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(quiz);
@@ -187,6 +191,7 @@ namespace EducationWebApplication.Controllers
             }
             
             await _context.SaveChangesAsync();
+            TempData["success"] = "Quiz deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 

@@ -7,7 +7,7 @@
     <br />
     <div class="form-group">
         <label asp-for="CourseName" class="control-label col-md-2"></label>
-        <input asp-for="CourseName" class="form-control" />
+        <input asp-for="CourseName" class="form-control" id="SearchPhrase" />
         <span asp-validation-for="CourseName" class="text-danger"></span>
     </div>
     <br />
@@ -34,3 +34,21 @@
         </div>
     </div>
 </form>
+@section scripts{
+<script>
+$(document).ready(function () {
+    $("#SearchPhrase").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Courses/SearchRatingSuggestions",
+                data: { searchString: request.term },
+                success: function (data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 2
+    });
+});
+</script>
+}
