@@ -4,15 +4,46 @@
 }
 <h2>Course Ratings</h2>
 <br>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ShowRatingResults">
+            <div class="input-group">
+                <input name="SearchPhrase" id="SearchPhrase" class="form-control" />
+                <span class="input-group-btn search-btn" style="margin-left: 15px;">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
 @foreach (var rating in Model)
 {
     <div class="card mb-3">
         <div class="card-body">
             <h5>Rating Id: @rating.RatingId</h5>
             <p>Course Name: @rating.CourseName</p>
-            <p>Rating Value: @rating.RatingValue/5&nbsp;<i class="bi bi-star-fill"></i>
-            <p>Rating Description: @rating.RatingDescription</p>
-            <p><small class="text-muted">Rating Time: @rating.RatingTime</small></p>
+            <p>Rating: @rating.RatingValue/5&nbsp;<i class="bi bi-star-fill"></i>
+            <p>Description: @rating.RatingDescription</p>
+            <p><small class="text-muted">Time: @rating.RatingTime</small></p>
         </div>
     </div>
+}
+@section scripts{
+<script>
+$(document).ready(function () {
+    $("#SearchPhrase").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Courses/SearchRatingSuggestions",
+                data: { searchString: request.term },
+                success: function (data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 2
+    });
+});
+</script>
 }
