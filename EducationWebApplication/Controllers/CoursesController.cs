@@ -117,14 +117,13 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Courses/Create
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Courses/Create
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CourseName,CourseMaterials,CourseProf")] Course course)
@@ -140,7 +139,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Courses/Edit
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Course == null)
@@ -192,7 +191,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Courses/Delete
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Course == null)

@@ -21,7 +21,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Quizzes
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager")]
         public async Task<IActionResult> Index()
         {
               return _context.Quiz != null ? 
