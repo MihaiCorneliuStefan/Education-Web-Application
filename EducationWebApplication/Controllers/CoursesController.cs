@@ -47,21 +47,10 @@ namespace EducationWebApplication.Controllers
             var courses = await _context.Course
                 .Where(c => c.CourseName.StartsWith(searchString))
                 .Select(c => new { label = c.CourseName })
-                .ToListAsync();
-
-            return Json(courses);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> SearchRatingSuggestions(string searchString)
-        {
-            var ratings = await _context.Rating
-                .Where(r => r.CourseName.StartsWith(searchString))
-                .Select(r => r.CourseName)
                 .Distinct()
                 .ToListAsync();
 
-            return Json(ratings);
+            return Json(courses);
         }
 
         [HttpGet]

@@ -21,7 +21,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Quizzes
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
               return _context.Quiz != null ? 
@@ -54,8 +54,10 @@ namespace EducationWebApplication.Controllers
                 }
             }
 
-            return View("QuizResult",score);
+            var quizTuple = new Tuple<List<Quiz>, int>(quizzes, score);
+            return View("QuizResult", quizTuple);
         }
+
 
         [Authorize]
         // GET: Quizzes/Details/5

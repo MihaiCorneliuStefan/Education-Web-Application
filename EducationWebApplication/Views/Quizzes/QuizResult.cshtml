@@ -1,17 +1,22 @@
-﻿@model int
+﻿@model Tuple<List<EducationWebApplication.Models.Quiz>, int>
 
 @{
     ViewData["Title"] = "Quiz Result";
 }
 
+@{
+    var quizCount = Model.Item1.Count;
+    var passThreshold = quizCount / 2;
+}
+
 <h2>Your Quiz Result</h2>
-<p>Your score: @Model</p>
-@if (Model >= 1)
+<p>Your score: @Model.Item2</p>
+@if (Model.Item2 >= passThreshold)
 {
-<p>Congratulations, you passed the quiz!</p>
+    <p>Congratulations, you passed the quiz!</p>
 }
 else
 {
-<p>Sorry, you did not pass the quiz. Please try again.</p>
+    <p>Sorry, you did not pass the quiz. Please try again.</p>
 }
 <a asp-action="ShowQuizzes">Back to Quiz</a>
