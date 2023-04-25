@@ -1,34 +1,42 @@
 ﻿@model EducationWebApplication.Models.Course
 
 @{
-    ViewData["Title"] = "Details";
+ViewData["Title"] = "Details";
 }
 
-<h1>Course Details</h1>
+<h1>Course Materials</h1>
+@if (!string.IsNullOrEmpty(Model.CourseMaterials))
+{
+@foreach (var material in Model.CourseMaterials.Split('\n').Where(m => !string.IsNullOrWhiteSpace(m)))
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <p class="card-text">@material</p>
+        </div>
+    </div>
+}
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseMaterials)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CourseMaterials)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseProf)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CourseProf)
-        </dd>
-    </dl>
-</div>
+}
+
+@if (Model != null)
+{
+<form method="post" asp-action="Details">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Add Course Materials</h5>
+                <div class="form-group">
+                <textarea asp-for="CourseMaterials" class="form-control"></textarea>
+                <span asp-validation-for="CourseMaterials" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        </div>
+    </div>
+</form>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a>
     <br />

@@ -86,27 +86,40 @@ namespace EducationWebApplication.Controllers
             return View(rating);
         }
 
-        [Authorize]
-        // GET: Courses/Details
+        // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Course == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Course
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var course = await _context.Course.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
             }
-
             return View(course);
         }
 
-        // GET: Courses/Create
-        [Authorize(Roles = "Administrator,Manager")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(int id, Course course)
+        {
+            var existingCourse = await _context.Course.FindAsync(id);
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
+            existingCourse.CourseMaterials += "\n\n" + course.CourseMaterials;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = id });
+        }
+
+
+            // GET: Courses/Create
+            [Authorize(Roles = "Administrator,Manager")]
         public IActionResult Create()
         {
             return View();
