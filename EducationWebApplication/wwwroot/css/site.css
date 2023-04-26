@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+.card-body img {
+    max-width: 100%;
+}
+.input-box .ql-editor {
+    height: 100px;
+}

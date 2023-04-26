@@ -102,24 +102,59 @@ namespace EducationWebApplication.Controllers
             return View(course);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(int id, Course course)
+        public async Task<IActionResult> Details(int id, Course course, IFormFile file, string youtubeLink)
         {
             var existingCourse = await _context.Course.FindAsync(id);
             if (existingCourse == null)
             {
                 return NotFound();
             }
-            existingCourse.CourseMaterials += "\n\n" + course.CourseMaterials;
+
+            var courseMaterials = new List<string>();
+
+            if (!string.IsNullOrEmpty(existingCourse.CourseMaterials))
+            {
+                courseMaterials.AddRange(existingCourse.CourseMaterials.Split("\n\n"));
+            }
+
+
+            if (file != null && file.Length > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                courseMaterials.Add(fileName);
+            }
+
+            if (!string.IsNullOrEmpty(youtubeLink))
+            {
+                courseMaterials.Add(youtubeLink);
+            }
+
+            if (!string.IsNullOrEmpty(course.CourseMaterials))
+            {
+                courseMaterials.Add(course.CourseMaterials);
+            }
+
+            existingCourse.CourseMaterials = string.Join("\n\n", courseMaterials);
+
             await _context.SaveChangesAsync();
+
+            ModelState.Clear();
 
             return RedirectToAction(nameof(Details), new { id = id });
         }
 
 
-            // GET: Courses/Create
-            [Authorize(Roles = "Administrator,Manager")]
+        // GET: Courses/Create
+        [Authorize(Roles = "Administrator,Manager")]
         public IActionResult Create()
         {
             return View();

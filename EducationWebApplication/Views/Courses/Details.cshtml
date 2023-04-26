@@ -1,45 +1,116 @@
-﻿@model EducationWebApplication.Models.Course
+﻿@using System.Web
+@model EducationWebApplication.Models.Course
 
 @{
-ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details";
 }
 
 <h1>Course Materials</h1>
+
 @if (!string.IsNullOrEmpty(Model.CourseMaterials))
 {
-@foreach (var material in Model.CourseMaterials.Split('\n').Where(m => !string.IsNullOrWhiteSpace(m)))
-{
-    <div class="card mb-3">
-        <div class="card-body">
-            <p class="card-text">@material</p>
+    @foreach (var material in Model.CourseMaterials.Split('\n').Where(m => !string.IsNullOrWhiteSpace(m)))
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                @if (IsYouTubeUrl(material))
+                {
+                    var videoId = GetYouTubeVideoId(material);
+                    <iframe src="https://www.youtube.com/embed/@videoId" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                }
+                else if (IsImage(material))
+                {
+                    <img src="~/files/@material" />
+                }
+                else
+                {
+                    <p class="card-text">@Html.Raw(material)</p>
+                }
+            </div>
         </div>
-    </div>
+    }
 }
-
-}
+<br />
 
 @if (Model != null)
 {
-<form method="post" asp-action="Details">
+    <form method="post" asp-action="Details" enctype="multipart/form-data">
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Add Course Materials</h5>
-                <div class="form-group">
-                <textarea asp-for="CourseMaterials" class="form-control"></textarea>
+            <div class="form-group">
+                <div id="editor" class="input-box"></div>
+                <input type="hidden" name="CourseMaterials" id="CourseMaterials">
                 <span asp-validation-for="CourseMaterials" class="text-danger"></span>
-        </div>
-        <br />
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label for="youtubeLink">Add a YouTube video:</label>
+                <input type="url" class="form-control" id="youtubeLink" name="youtubeLink" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="file">Upload a file:</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
         </div>
     </div>
 </form>
+
+
 }
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a>
-    <br />
     <br />
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script>
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline'],
+                    ['link']
+                ]
+            }
+        });
+        quill.on('text-change', function () {
+            var html = quill.root.innerHTML;
+            document.getElementById('CourseMaterials').value = html;
+        });
+    </script>
+}
+
+@functions {
+    private bool IsYouTubeUrl(string url)
+{
+    if (string.IsNullOrWhiteSpace(url))
+    {
+        return false;
+    }
+
+    Uri.TryCreate(url, UriKind.Absolute, out Uri uri);
+
+    return uri != null && (uri.Host.EndsWith("youtube.com") || uri.Host.EndsWith("youtu.be"));
+}
+
+    private bool IsImage(string url)
+    {
+        return url.EndsWith(".png") || url.EndsWith(".jpg") || url.EndsWith(".jpeg") || url.EndsWith(".gif");
+    }
+
+    private string GetYouTubeVideoId(string url)
+    {
+        var uri = new Uri(url);
+        var query = HttpUtility.ParseQueryString(uri.Query);
+        return query["v"];
+    }
+}
