@@ -6,71 +6,74 @@
 }
 
 <h1>Course Materials</h1>
-
 @if (!string.IsNullOrEmpty(Model.CourseMaterials))
 {
     @foreach (var material in Model.CourseMaterials.Split('\n').Where(m => !string.IsNullOrWhiteSpace(m)))
     {
-        <div class="card mb-3">
-            <div class="card-body">
-                @if (IsYouTubeUrl(material))
-                {
-                    var videoId = GetYouTubeVideoId(material);
-                    <iframe src="https://www.youtube.com/embed/@videoId" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                }
-                else if (IsImage(material))
-                {
-                    <img src="~/files/@material" />
-                }
-                else
-                {
-                    <p class="card-text">@Html.Raw(material)</p>
-                }
+        if (!material.StartsWith("Posted on:"))
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    @if (IsYouTubeUrl(material))
+                    {
+                        var videoId = GetYouTubeVideoId(material);
+                        <iframe src="https://www.youtube.com/embed/@videoId" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    }
+                    else if (IsImage(material))
+                    {
+                        <img src="~/files/@material" />
+                    }
+                    else
+                    {
+                        <p class="card-text">@Html.Raw(material)</p>
+                    }
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <p>@material</p>
+        }
     }
 }
+
 <br />
 
 @if (Model != null)
 {
     <form method="post" asp-action="Details" enctype="multipart/form-data">
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Add Course Materials</h5>
-            <div class="form-group">
-                <div id="editor" class="input-box"></div>
-                <input type="hidden" name="CourseMaterials" id="CourseMaterials">
-                <span asp-validation-for="CourseMaterials" class="text-danger"></span>
-            </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Add Course Materials</h5>
+                <div class="form-group">
+                    <div id="editor" class="input-box"></div>
+                    <input type="hidden" name="CourseMaterials" id="CourseMaterials">
+                    <span asp-validation-for="CourseMaterials" class="text-danger"></span>
+                </div>
 
-            <br />
+                <br />
 
-            <div class="form-group">
-                <label for="youtubeLink">Add a YouTube video:</label>
-                <input type="url" class="form-control" id="youtubeLink" name="youtubeLink" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-            </div>
-            <br />
-            <div class="form-group">
-                <label for="file">Upload a file:</label>
-                <input type="file" class="form-control-file" id="file" name="file">
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <div class="form-group">
+                    <label for="youtubeLink">Add a YouTube video:</label>
+                    <input type="url" class="form-control" id="youtubeLink" name="youtubeLink" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="file">Upload a file:</label>
+                    <input type="file" class="form-control-file" id="file" name="file">
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
             </div>
         </div>
-    </div>
-</form>
-
-
+    </form>
 }
-
 <div>
     <br />
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     <script>
         var quill = new Quill('#editor', {

@@ -7,7 +7,7 @@ namespace EducationWebApplication.Models
         [Key]
         public int RatingId { get; set; }
         [Required]
-        [Display(Name ="Course Name")]
+        [Display(Name = "Course Name")]
         public string CourseName { get; set; }
         [Required]
         [Display(Name = "Rating")]

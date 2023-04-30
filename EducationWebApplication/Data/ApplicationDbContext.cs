@@ -16,6 +16,5 @@ namespace EducationWebApplication.Data
         public DbSet<EducationWebApplication.Models.Rating> Rating { get; set; }
         public DbSet<IdentityUser> Users { get; set; }
 
-
     }
 }

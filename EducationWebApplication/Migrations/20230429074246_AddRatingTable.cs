@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace EducationWebApplication.Data.Migrations
+namespace EducationWebApplication.Migrations
 {
-    public partial class AddRating : Migration
+    public partial class AddRatingTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.CreateTable(
                 name: "Rating",
                 columns: table => new
@@ -26,10 +27,13 @@ namespace EducationWebApplication.Data.Migrations
                 });
         }
 
+           
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+           
             migrationBuilder.DropTable(
                 name: "Rating");
+
         }
     }
 }

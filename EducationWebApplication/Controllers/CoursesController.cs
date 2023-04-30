@@ -120,6 +120,8 @@ namespace EducationWebApplication.Controllers
                 courseMaterials.AddRange(existingCourse.CourseMaterials.Split("\n\n"));
             }
 
+            var PostTime = DateTime.Now;
+            courseMaterials.Add($"Posted on: {PostTime}");
 
             if (file != null && file.Length > 0)
             {
@@ -151,6 +153,8 @@ namespace EducationWebApplication.Controllers
 
             return RedirectToAction(nameof(Details), new { id = id });
         }
+
+
 
 
         // GET: Courses/Create

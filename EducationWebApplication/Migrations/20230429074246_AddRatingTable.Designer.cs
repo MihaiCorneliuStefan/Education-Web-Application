@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EducationWebApplication.Data.Migrations
+namespace EducationWebApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230422090320_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20230429074246_AddRatingTable")]
+    partial class AddRatingTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

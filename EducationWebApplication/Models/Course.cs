@@ -14,11 +14,11 @@ namespace EducationWebApplication.Models
         public string CourseMaterials { get; set; }
         [DisplayName("Course Professor")]
         public string CourseProf { get; set; }
-
+        public DateTime PostTime { get; set; }
 
         public Course()
         {
-
+            PostTime = DateTime.Now;
         }
     }
 }

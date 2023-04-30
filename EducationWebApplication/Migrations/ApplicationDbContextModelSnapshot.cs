@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EducationWebApplication.Data.Migrations
+namespace EducationWebApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -41,6 +41,9 @@ namespace EducationWebApplication.Data.Migrations
                     b.Property<string>("CourseProf")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PostTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -92,9 +95,6 @@ namespace EducationWebApplication.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"), 1L, 1);
 
-                    b.Property<int>("CourseIdId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CourseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -110,8 +110,6 @@ namespace EducationWebApplication.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("RatingId");
-
-                    b.HasIndex("CourseIdId");
 
                     b.ToTable("Rating");
                 });
@@ -316,17 +314,6 @@ namespace EducationWebApplication.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("EducationWebApplication.Models.Rating", b =>
-                {
-                    b.HasOne("EducationWebApplication.Models.Course", "CourseId")
-                        .WithMany()
-                        .HasForeignKey("CourseIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CourseId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
