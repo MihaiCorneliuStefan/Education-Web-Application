@@ -10,7 +10,7 @@
 {
     @foreach (var material in Model.CourseMaterials.Split('\n').Where(m => !string.IsNullOrWhiteSpace(m)))
     {
-        if (!material.StartsWith("Posted on:"))
+        if (!material.StartsWith("Posted on:")) 
         {
             <div class="card mb-3">
                 <div class="card-body">

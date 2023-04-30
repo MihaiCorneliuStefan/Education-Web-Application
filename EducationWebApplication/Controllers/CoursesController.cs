@@ -87,6 +87,7 @@ namespace EducationWebApplication.Controllers
         }
 
         // GET: Courses/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -120,8 +121,14 @@ namespace EducationWebApplication.Controllers
                 courseMaterials.AddRange(existingCourse.CourseMaterials.Split("\n\n"));
             }
 
-            var PostTime = DateTime.Now;
-            courseMaterials.Add($"Posted on: {PostTime}");
+            var currentUser = _context.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+            if (currentUser != null)
+            {
+                string userName = currentUser.UserName;
+                var postTime = DateTime.Now;
+                courseMaterials.Add($"Posted on: {postTime} by: {userName}");
+            }
+
 
             if (file != null && file.Length > 0)
             {
@@ -146,11 +153,9 @@ namespace EducationWebApplication.Controllers
             }
 
             existingCourse.CourseMaterials = string.Join("\n\n", courseMaterials);
-
             await _context.SaveChangesAsync();
-
+            TempData["success"] = "Post created successfully";
             ModelState.Clear();
-
             return RedirectToAction(nameof(Details), new { id = id });
         }
 
