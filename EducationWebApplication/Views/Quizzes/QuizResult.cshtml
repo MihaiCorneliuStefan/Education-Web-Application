@@ -11,7 +11,7 @@
 
 <h2>Your Quiz Result</h2>
 <p>Your score: @Model.Item2/@quizCount</p>
-@if (Model.Item2 >= passThreshold)
+@if (Model.Item2 > passThreshold)
 {
     <p>Congratulations, you passed the quiz!</p>
 }

@@ -36,11 +36,6 @@ namespace EducationWebApplication.Controllers
             return View("Index", await _context.Course.Where(i => i.CourseName.Contains(SearchPhrase)).ToListAsync());
         }
 
-        public async Task<IActionResult> ShowRatingResults(String SearchPhrase)
-        {
-            return View("GetCourseRatings", await _context.Rating.Where(i => i.CourseName.Contains(SearchPhrase)).ToListAsync());
-        }
-
         [HttpGet]
         public async Task<IActionResult> SearchSuggestions(string searchString)
         {
@@ -51,6 +46,11 @@ namespace EducationWebApplication.Controllers
                 .ToListAsync();
 
             return Json(courses);
+        }
+
+        public async Task<IActionResult> ShowRatingResults(String SearchPhrase)
+        {
+            return View("GetCourseRatings", await _context.Rating.Where(i => i.CourseName.Contains(SearchPhrase)).ToListAsync());
         }
 
         [HttpGet]
@@ -86,7 +86,6 @@ namespace EducationWebApplication.Controllers
             return View(rating);
         }
 
-        // GET: Courses/Details/5
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {

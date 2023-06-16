@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Course Materials</h1>
+<h1>@Model.CourseName</h1>
 @if (!string.IsNullOrEmpty(Model.CourseMaterials))
 {
     @foreach (var material in Model.CourseMaterials.Split('\n').Where(m => !string.IsNullOrWhiteSpace(m)))
@@ -44,7 +44,7 @@
     <form method="post" asp-action="Details" enctype="multipart/form-data">
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">Add Course Materials</h5>
+                <h5 class="card-title">Make an Announcement</h5>
                 <div class="form-group">
                     <div id="editor" class="input-box"></div>
                     <input type="hidden" name="CourseMaterials" id="CourseMaterials">
@@ -72,7 +72,7 @@
 }
 <div>
     <br />
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Courses</a>
 </div>
 @section Scripts {
     <script>
