@@ -30,6 +30,7 @@
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
+            <input type="hidden" asp-for="UserName" value="@User.Identity.Name" />
             <button type="submit" class="btn btn-primary">Add Rating</button>
         </div>
     </div>

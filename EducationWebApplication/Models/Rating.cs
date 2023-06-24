@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EducationWebApplication.Models
 {
@@ -17,6 +18,8 @@ namespace EducationWebApplication.Models
         public string RatingDescription { get; set; }
         [Required]
         public DateTime RatingTime { get; set; }
+        [Required]
+        public string UserName { get; set; }
         public Rating()
         {
             RatingTime = DateTime.Now;

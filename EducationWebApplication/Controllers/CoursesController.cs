@@ -77,6 +77,8 @@ namespace EducationWebApplication.Controllers
 
             if (ModelState.IsValid)
             {
+                // Atribui UserId
+                rating.UserName = User.Identity.Name;
                 _context.Rating.Add(rating);
                 await _context.SaveChangesAsync();
                 TempData["success"] = "Rating created successfully";
@@ -85,6 +87,7 @@ namespace EducationWebApplication.Controllers
 
             return View(rating);
         }
+
 
         [Authorize]
         public async Task<IActionResult> Details(int? id)
